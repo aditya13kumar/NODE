@@ -50,7 +50,16 @@
 import * as fs from 'node:fs/promises';
 
 async function createfile(pathname){
-    await fs.writeFile(pathname,'addiiitttyyyyaaa');
+    try{
+
+     await fs.writeFile(pathname,'addiiitttyyyyaaa\n'); /// suspend this code
+     await fs.appendFile(pathname,'PPPPiiitttyyyyaaa\N');
+
+    }catch(err){
+        console.log(`errooorr`)
+    }
+
+
     console.log(`file createdd!!!`);
 
 }
