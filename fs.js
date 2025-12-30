@@ -36,12 +36,10 @@
 //     });
    
 //     console.log(`file created!!`);
-
-
 // }
-   
-
 // createfile('./text.txt');
+
+
 
 
 
@@ -49,19 +47,87 @@
 
 import * as fs from 'node:fs/promises';
 
-async function createfile(pathname){
-    try{
 
-     await fs.writeFile(pathname,'addiiitttyyyyaaa\n'); /// suspend this code
-     await fs.appendFile(pathname,'PPPPiiitttyyyyaaa\N');
-
-    }catch(err){
-        console.log(`errooorr`)
-    }
+async function deletefolder(removefold) {
+    await fs.rm(removefold,{recursive:true}); // for delete folder
+}
+//deletefolder('./content');
 
 
-    console.log(`file createdd!!!`);
 
+
+
+async function deletefile(params) {
+   await fs.unlink(params); //for delete file  
+}
+//deletefile('./text.txt');
+
+
+
+
+async function readfile(pathname){
+   const data= await fs.readFile(pathname,'utf-8');
+    console.log('data',data);
+}
+//readfile('./text.txt');
+
+
+
+
+
+async function createfolder(foldername){
+    await fs.mkdir(foldername,{recursive:true});
+}
+//createfolder('./content/pages');  
+//this is why use for recursive that we can create folder in folder
+
+
+
+
+
+
+
+async function writefile(pathname,content = ''){
+    await fs.appendFile(pathname, content);
 }
 
-createfile('./text.txt');
+
+
+
+
+
+async function createfile(pathname,content=''){
+    await fs.writeFile(pathname,content);
+}
+
+createfile('./hello.txt','Hello Node js!! \n pissu here!!');
+
+async function getfileInfo(filepath) {
+    const stats = await fs.stat(filepath);
+    return{
+        size:`${(stats.size / 1024).toFixed(2)} KB`,
+        created:stats.birthtime.toLocaleString(),
+        modified:stats.mtime.toLocaleString(),
+
+    }
+
+  
+    
+}
+getfileInfo('./hello.txt').then(data=>{console.log(data)});
+ 
+
+
+
+
+// async function createfile(pathname){
+//     try{
+
+//      await fs.writeFile(pathname,'addiiitttyyyyaaa\n'); /// suspend this code
+//      await fs.appendFile(pathname,'PPPPiiitttyyyyaaa\N');
+//     }catch(err){
+//         console.log(`errooorr`)
+//     }
+//     console.log(`file createdd!!!`);
+// }
+// createfile('./text.txt');
