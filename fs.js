@@ -46,9 +46,25 @@
 
 
 import * as fs from 'node:fs/promises';
+import { type } from 'node:os';
 
 
-async function deletefolder(removefold) {
+export async function ListItems(listpath='./'){
+    const Items = await fs.readdir(listpath,{withFileTypes:true});
+    return Items.map(Items=>{
+        return{
+            name:Items.name,
+            //type:Items.isDirectory()?'folder' :'file'
+        }
+        
+    })
+   
+}
+ListItems();
+
+
+
+export async function deletefolder(removefold) {
     await fs.rm(removefold,{recursive:true}); // for delete folder
 }
 //deletefolder('./content');
@@ -57,7 +73,7 @@ async function deletefolder(removefold) {
 
 
 
-async function deletefile(params) {
+export async function deletefile(params) {
    await fs.unlink(params); //for delete file  
 }
 //deletefile('./text.txt');
@@ -75,7 +91,7 @@ async function readfile(pathname){
 
 
 
-async function createfolder(foldername){
+export async function createfolder(foldername){
     await fs.mkdir(foldername,{recursive:true});
 }
 //createfolder('./content/pages');  
@@ -87,7 +103,7 @@ async function createfolder(foldername){
 
 
 
-async function writefile(pathname,content = ''){
+export async function writefile(pathname,content = ''){
     await fs.appendFile(pathname, content);
 }
 
@@ -96,11 +112,11 @@ async function writefile(pathname,content = ''){
 
 
 
-async function createfile(pathname,content=''){
+export async function createfile(pathname,content=''){
     await fs.writeFile(pathname,content);
 }
 
-createfile('./hello.txt','Hello Node js!! \n pissu here!!');
+//createfile('./hello.txt','Hello Node js!! \n pissu here!!');
 
 async function getfileInfo(filepath) {
     const stats = await fs.stat(filepath);
@@ -114,7 +130,7 @@ async function getfileInfo(filepath) {
   
     
 }
-getfileInfo('./hello.txt').then(data=>{console.log(data)});
+//getfileInfo('./hello.txt').then(data=>{console.log(data)});
  
 
 
